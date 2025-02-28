@@ -7,6 +7,7 @@ A little exercise to build a web application following an agile development proc
 - Chuqiao Huang (ch3807) - [GitHub Profile](https://github.com/ChuqiaoHuang)
 - Jasmine Zhang (jz5144) - [GitHub Profile](https://github.com/Jasminezhang666666)
 - Shipeng Zhao (sz3822) - [GitHub Profile](https://github.com/Tonyzsp)
+- Leo Wu (jw7026) - [GitHub Profile](https://github.com/leowu777)
 
 
 
