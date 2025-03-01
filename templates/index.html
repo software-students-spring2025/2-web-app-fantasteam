@@ -7,57 +7,90 @@
     <style>
         body {
             font-family: Arial, sans-serif;
-            margin: 20px;
-            line-height: 1.6;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
         }
         h1 {
             color: #333;
+            margin-top: 20px;
         }
         form {
-            margin-bottom: 20px;
+            margin: 10px 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
         input[type="text"] {
             padding: 8px;
-            width: 200px;
+            width: 80%;
+            margin-bottom: 10px;
+            border-radius: 4px;
+            border: 1px solid #ccc;
         }
         button {
-            padding: 8px 12px;
+            padding: 8px 16px;
             cursor: pointer;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
+            margin-top: 5px;
         }
         ul {
             list-style: none;
             padding: 0;
+            width: 90%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
         }
-        li {
-            background: #f4f4f4;
-            margin: 10px 0;
-            padding: 10px;
+        li.task-container {
+            background: white;
+            margin: 10px auto;
+            padding: 15px;
             border-left: 4px solid #007bff;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 40%;
+            max-width: 300px;
+            overflow-wrap: break-word;
         }
+
         a {
-            display: inline-block;
-            margin-top: 10px;
-            padding: 8px 12px;
+            display: block;
+            margin: 5px auto;
+            padding: 8px 16px;
             text-decoration: none;
             background: #28a745;
             color: white;
             border-radius: 4px;
+            width: 60%;
+            max-width: 200px;
+            text-align: center;
         }
         a:hover {
             background: #218838;
         }
+        .task-container span {
+            display: block;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
     </style>
 </head>
 <body>
-    <h1>All Tasks</h1>
+    <h1>Welcome, User, to Task Manager</h1>
 
     <section>
         <form action="{{ url_for('search') }}" method="GET">
-            <label for="search">Search tasks:</label>
+            <label for="search">Search tasks:</label><br>
             <input type="text" id="search" name="query" placeholder="Search tasks...">
             <button type="submit">Search</button>
         </form>
@@ -66,7 +99,7 @@
     <ul>
         {% for task in tasks %}
         <li class="task-container">
-            <span><strong>{{ task.title }}</strong> - {{ task.description }} - {{ task.status }}</span>
+            <span><strong>{{ task.title }}</strong><br>{{ task.description }}<br>{{ task.status }}</span>
             <form action="{{ url_for('update', task_id=task['_id']) }}" method="GET" style="display:inline;">
                 <button type="submit" class="edit-btn">Edit</button>
             </form>
@@ -76,11 +109,11 @@
                 </button>
             </form>
         </li>
-    {% endfor %}
-</ul>
-    
+        {% endfor %}
+    </ul>
 
     <a href="{{ url_for('completed') }}">View Completed Tasks</a>
-    <a href="{{ url_for('add') }}" style="background: hsl(356, 100%, 50%); color: white;">Add New Task</a>
+    <a href="{{ url_for('add') }}" style="background: hsl(356, 100%, 50%);">Add New Task</a>
+
 </body>
 </html>
