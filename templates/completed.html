@@ -2,25 +2,73 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Completed Tasks</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            background-color: #f4f4f4;
+        }
+        h1 {
+            color: #333;
+            margin-top: 20px;
+        }
+        ul {
+            list-style: none;
+            padding: 0;
+            width: 90%;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        li.task-container {
+            background: white;
+            margin: 10px auto;
+            padding: 15px;
+            border-left: 4px solid #007bff;
+            border-radius: 6px;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 40%;
+            max-width: 300px;
+            overflow-wrap: break-word;
+        }
+        a {
+            display: block;
+            margin: 5px auto;
+            padding: 8px 16px;
+            text-decoration: none;
+            background: #28a745;
+            color: white;
+            border-radius: 4px;
+            width: 60%;
+            max-width: 200px;
+            text-align: center;
+        }
+        a:hover {
+            background: #218838;
+        }
+    </style>
 </head>
 <body>
-  <div class="container my-5">
-    <h1 class="mb-4">Completed Tasks</h1>
-    
+  <h1>Completed Tasks</h1>
     {% if tasks %}
-      <ul class="list-group">
+      <ul>
         {% for task in tasks %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
+          <li class="task-container">
             <div>
               <h5 class="mb-1">{{ task.title }}</h5>
               <p class="mb-1">{{ task.description }}</p>
               <small class="text-muted">Status: {{ task.status }}</small>
             </div>
             <div>
-              <!-- Default link/button style -->
               <a href="/incomplete/{{ task._id }}">Mark as Incomplete</a>
             </div>
           </li>
@@ -29,6 +77,6 @@
     {% else %}
       <p>No completed tasks available.</p>
     {% endif %}
-  </div>
+
 </body>
 </html>
