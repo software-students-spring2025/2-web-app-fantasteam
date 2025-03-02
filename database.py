@@ -4,6 +4,7 @@ from datetime import datetime
 import os
 from dotenv import load_dotenv
 from datetime import datetime
+from flask_login import current_user
 
 # Load environment variables from .env
 load_dotenv()
@@ -23,7 +24,8 @@ def get_tasks():
     Returns:
         list: A list of all task documents as dictionaries.
     """
-    tasks = list(tasks_collection.find().sort("created_at", -1))
+    user_id = str(current_user.id)
+    tasks = list(tasks_collection.find({"user_id": user_id}).sort("created_at", -1))
     for task in tasks:
         task['_id'] = str(task['_id'])  # Convert ObjectId to string for compatibility
     return tasks
@@ -37,6 +39,7 @@ def add_task(task):
     Returns:
         str: The ID of the inserted task.
     """
+    task['user_id'] = str(current_user.id)
     task['created_at'] = datetime.utcnow()  # Add creation timestamp
     result = tasks_collection.insert_one(task)
     return str(result.inserted_id)
@@ -53,6 +56,7 @@ def update_task(task_id, title=None, description=None, status=None):
     Returns:
         bool: True if the update was successful, False otherwise.
     """
+    user_id = str(current_user.id)
     updated_data = {}
     if title:
         updated_data['title'] = title
@@ -63,7 +67,7 @@ def update_task(task_id, title=None, description=None, status=None):
 
     if updated_data:
         result = tasks_collection.update_one(
-            {'_id': ObjectId(task_id)},
+            {'_id': ObjectId(task_id), 'user_id': user_id},
             {'$set': updated_data}
         )
         return result.modified_count > 0
@@ -78,7 +82,8 @@ def delete_task(task_id):
     Returns:
         bool: True if the deletion was successful, False otherwise.
     """
-    result = tasks_collection.delete_one({'_id': ObjectId(task_id)})
+    user_id = str(current_user.id)
+    result = tasks_collection.delete_one({'_id': ObjectId(task_id),'user_id': user_id})
     return result.deleted_count > 0
 
 
@@ -90,7 +95,9 @@ def search_tasks(query):
     Returns:
         list: A list of matching task documents.
     """
+    user_id = str(current_user.id)
     search_results = tasks_collection.find({
+        'user_id': user_id,
         '$or': [
             {'title': {'$regex': query, '$options': 'i'}},
             {'description': {'$regex': query, '$options': 'i'}}
