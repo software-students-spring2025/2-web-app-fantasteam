@@ -13,34 +13,34 @@
     <!-- Search Form -->
     <form action="/search" method="GET" class="mb-4">
       <div class="input-group">
-        <input 
-          type="text" 
-          class="form-control" 
-          name="query" 
-          placeholder="Enter keyword to search tasks..." 
-          value="{{ request.args.get('query', '') }}">
+        <input type="text" class="form-control" name="query" placeholder="Enter keyword to search tasks..." value="{{ request.args.get('query', '') }}">
         <div class="input-group-append">
-          <button type="submit">Search</button>
+          <button type="submit" class="btn btn-primary">Search</button>
         </div>
       </div>
     </form>
     
     <!-- Search Results -->
-    <div>
-      {% if tasks %}
-        <ul class="list-group">
-          {% for task in tasks %}
-            <li class="list-group-item">
+    {% if tasks %}
+      <ul class="list-group">
+        {% for task in tasks %}
+          <li class="list-group-item d-flex justify-content-between align-items-center">
+            <div>
               <h5 class="mb-1">{{ task.title }}</h5>
               <p class="mb-1">{{ task.description }}</p>
               <small class="text-muted">Status: {{ task.status }}</small>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No tasks found.</p>
-      {% endif %}
-    </div>
+            </div>
+            <div>
+              <!-- Action buttons similar to other pages -->
+              <a href="/edit/{{ task._id }}" class="btn btn-sm btn-outline-primary mr-2">Edit</a>
+              <a href="/delete/{{ task._id }}" class="btn btn-sm btn-outline-danger">Delete</a>
+            </div>
+          </li>
+        {% endfor %}
+      </ul>
+    {% else %}
+      <p>No tasks found.</p>
+    {% endif %}
   </div>
 </body>
 </html>
