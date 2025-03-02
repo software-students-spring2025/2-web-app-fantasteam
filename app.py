@@ -4,6 +4,7 @@ from flask_login import LoginManager, login_user, logout_user, login_required, U
 from bson.objectid import ObjectId
 from dotenv import load_dotenv
 import os
+from database import get_tasks, add_task, delete_task, update_task
 
 # 加载 .env 文件
 load_dotenv()
@@ -47,7 +48,7 @@ def signup():
         password = request.form['password']
         
         if db.users.find_one({"username": username}):
-            flash('Username already exists')
+            flash("Username already exists", "error")
             return redirect(url_for('signup'))
         
         new_user = {
@@ -56,7 +57,7 @@ def signup():
         }
         db.users.insert_one(new_user)
         
-        flash('Registration successful! Please log in.')
+        flash("Registration successful! Please log in.", "success")
         return redirect(url_for('login'))
     
     return render_template('signup.html')
@@ -71,10 +72,10 @@ def login():
         print(f"User data: {user_data}")  # 调试信息
         if user_data and user_data["password"] == password:
             user = User(str(user_data["_id"]), user_data["username"], user_data["password"])
-            login_user(user)
+            login_user(user,remember=False)
             return redirect(url_for('home'))
         else:
-            flash('Invalid username or password')
+            flash("Invalid username or password","error")
     return render_template('login.html')
 
 # 注销路由
@@ -160,24 +161,6 @@ def completed():
     # 过滤状态为 "completed" 的任务
     completed_tasks = [task for task in tasks if task.get('status') == 'completed']
     return render_template('completed.html', tasks=completed_tasks)
-
-# 数据库操作函数
-def get_tasks():
-    return list(db.tasks.find())
-
-def add_task(task):
-    db.tasks.insert_one(task)
-
-def update_task(task_id, title, description, status):
-    result = db.tasks.update_one(
-        {"_id": ObjectId(task_id)},
-        {"$set": {"title": title, "description": description, "status": status}}
-    )
-    return result.modified_count > 0
-
-def delete_task(task_id):
-    result = db.tasks.delete_one({"_id": ObjectId(task_id)})
-    return result.deleted_count > 0
 
 if __name__ == '__main__':
     app.run(debug=True)
