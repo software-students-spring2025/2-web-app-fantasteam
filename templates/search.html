@@ -95,19 +95,37 @@
         margin: 5px auto;
     }
 
-    .no-tasks{
-    background-color: #ffdddd;  
-    color: #b30000;  
-    font-size: 20px;  
-    font-weight: bold;
-    text-align: center;
-    padding: 15px;
-    border: 2px solid #b30000;  
-    border-radius: 8px;
-    width: 80%;
-    max-width: 400px;
-    margin: 20px auto;
-}
+    .no-tasks {
+      background-color: #ffdddd;  
+      color: #b30000;  
+      font-size: 20px;  
+      font-weight: bold;
+      text-align: center;
+      padding: 15px;
+      border: 2px solid #b30000;  
+      border-radius: 8px;
+      width: 80%;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+    
+    /* Back button styling */
+    .back-btn {
+      display: block;
+      width: 200px;
+      text-align: center;
+      margin: 20px auto 0;
+      padding: 12px;
+      background: #28a745;
+      color: white;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+    .back-btn:hover {
+      background: #218838;
+    }
   </style>
 </head>
 <body>
@@ -136,10 +154,13 @@
         </li>
       {% endfor %}
     {% else %}
-    <div class="no-tasks">
-      No tasks found. Try searching again or add a new task!
-    </div>
+      <div class="no-tasks">
+        No tasks found. Try searching again or add a new task!
+      </div>
     {% endif %}
   </ul>
+  
+  <!-- Back to Home Button -->
+  <a href="{{ url_for('home') }}" class="back-btn">Back to Home</a>
 </body>
 </html>
