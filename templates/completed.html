@@ -7,6 +7,7 @@
   <style>
         body {
             font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
             margin: 0;
             padding: 0;
             display: flex;
@@ -14,69 +15,109 @@
             align-items: center;
             justify-content: center;
             min-height: 100vh;
-            background-color: #f4f4f4;
+            text-align: center;
         }
+
         h1 {
             color: #333;
             margin-top: 20px;
         }
-        ul {
+
+        .task-list {
             list-style: none;
             padding: 0;
             width: 90%;
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
+            align-items: center;
         }
-        li.task-container {
+
+        .task-container {
             background: white;
-            margin: 10px auto;
+            margin: 10px;
             padding: 15px;
-            border-left: 4px solid #007bff;
+            border-left: 4px solid #28a745; /* Green for completed tasks */
             border-radius: 6px;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 40%;
+            width: 90%;
             max-width: 300px;
             overflow-wrap: break-word;
         }
-        a {
+
+        .task-container span {
             display: block;
+            margin: 10px 0;
+            line-height: 1.6;
+        }
+
+        .task-container form {
+            width: 100%;
+        }
+
+        .task-container button {
+            width: 70%;
             margin: 5px auto;
-            padding: 8px 16px;
+        }
+
+        .mark-incomplete {
+            display: block;
+            padding: 10px;
+            background: #ffc107; 
+            color: black;
             text-decoration: none;
-            background: #28a745;
-            color: white;
-            border-radius: 4px;
+            border-radius: 6px;
+            font-weight: bold;
             width: 60%;
             max-width: 200px;
+            margin: 10px auto;
+        }
+
+        .mark-incomplete:hover {
+            background: #e0a800;
+        }
+
+        .no-tasks {
+            background-color: #ffdddd;  
+            color: #b30000;  
+            font-size: 20px;  
+            font-weight: bold;
             text-align: center;
+            padding: 15px;
+            border: 2px solid #b30000;  
+            border-radius: 8px;
+            width: 80%;
+            max-width: 400px;
+            margin: 20px auto;
         }
-        a:hover {
-            background: #218838;
+
+        @media (max-width: 600px) {
+            .task-container {
+                width: 100%;
+            }
+            .mark-incomplete {
+                width: 80%;
+            }
         }
-    </style>
+  </style>
 </head>
 <body>
   <h1>Completed Tasks</h1>
-    {% if tasks %}
-      <ul>
-        {% for task in tasks %}
-          <li class="task-container">
-            <div>
-              <h5 class="mb-1">{{ task.title }}</h5>
-              <p class="mb-1">{{ task.description }}</p>
-              <small class="text-muted">Status: {{ task.status }}</small>
-            </div>
-            <div>
-              <a href="/incomplete/{{ task._id }}">Mark as Incomplete</a>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <p>No completed tasks available.</p>
-    {% endif %}
 
+  {% if tasks %}
+    <ul class="task-list">
+      {% for task in tasks %}
+        <li class="task-container">
+          <span><strong>{{ task.title }}</strong><br>{{ task.description }}<br>Status: {{ task.status }}</span>
+          <a href="{{ url_for('mark_incomplete', task_id=task['_id']) }}" class="mark-incomplete">Mark as Incomplete</a>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <div class="no-tasks">
+      No completed tasks available. Try finish somemthing and mark it as completed!
+    </div>
+  {% endif %}
 </body>
 </html>
