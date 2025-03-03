@@ -91,6 +91,24 @@
             max-width: 400px;
             margin: 20px auto;
         }
+        
+        /* Back button style, similar to add.html */
+        .back-btn {
+            display: block;
+            width: 200px;
+            text-align: center;
+            margin: 20px auto 0;
+            padding: 12px;
+            background: #28a745;
+            color: white;
+            font-size: 1rem;
+            text-decoration: none;
+            border-radius: 6px;
+            transition: background 0.3s ease;
+        }
+        .back-btn:hover {
+            background: #218838;
+        }
 
         @media (max-width: 600px) {
             .task-container {
@@ -116,8 +134,11 @@
     </ul>
   {% else %}
     <div class="no-tasks">
-      No completed tasks available. Try finish somemthing and mark it as completed!
+      No completed tasks available. Try finishing something and mark it as completed!
     </div>
   {% endif %}
+
+  <!-- Back button -->
+  <a href="{{ url_for('home') }}" class="back-btn">Back to Home</a>
 </body>
 </html>
