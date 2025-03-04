@@ -63,7 +63,6 @@
             max-width: 300px;
             overflow-wrap: break-word;
         }
-
         a {
             display: block;
             margin: 5px auto;
@@ -84,10 +83,27 @@
             margin: 10px 0;
             line-height: 1.6;
         }
+        /* Logout button styling */
+        .logout-btn {
+            display: inline-block;
+            padding: 8px 16px;
+            background-color: #dc3545; /* Red color for logout */
+            color: white;
+            text-decoration: none;
+            border-radius: 4px;
+            margin: 10px;
+            transition: background 0.3s ease;
+        }
+        .logout-btn:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
     <h1>Welcome, {{ current_user.username }}, to Task Manager!</h1>
+    
+    <!-- Logout Button -->
+    <a href="{{ url_for('logout') }}" class="logout-btn">Logout</a>
 
     <section>
         <form action="{{ url_for('search') }}" method="GET">
