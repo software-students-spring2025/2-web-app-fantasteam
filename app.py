@@ -125,29 +125,34 @@ def update(task_id):
     return render_template('update.html', task=task)
 
 # Delete task route (modified)
-@app.route('/delete/<task_id>', methods=['POST'])
+@app.route('/delete/<task_id>', methods=['GET','POST'])
 @login_required
 def delete(task_id):
     # Get the task first to check its status
     task = db.tasks.find_one({"_id": ObjectId(task_id)})
+    
     if not task:
         flash("Task not found.", "error")
         return redirect(url_for('home'))
     task_status = task.get('status', '').lower()
     
-    success = delete_task(task_id)
-    if success:
-        print(f"Task {task_id} deleted successfully")
-        flash("Task deleted successfully.", "success")
-    else: 
-        print(f"Failed to delete task {task_id}.")
-        flash("Failed to delete task.", "error")
-    # If the task was completed, stay on the completed page
-    previous_page = request.referrer
-    if previous_page and  "completed" in previous_page:
-        return redirect(url_for('completed'))
-    else:
-        return redirect(url_for('home'))
+    if request.method == 'POST': #If user confirm deletion
+        success = delete_task(task_id)
+        if success:
+            print(f"Task {task_id} deleted successfully")
+            flash("Task deleted successfully.", "success")
+        else: 
+            print(f"Failed to delete task {task_id}.")
+            flash("Failed to delete task.", "error")
+        
+        # If the task was completed, stay on the completed page
+        previous_page = request.referrer
+        if previous_page and  "completed" in previous_page:
+            return redirect(url_for('completed'))
+        else:
+            return redirect(url_for('home'))
+    #If it is a get request
+    return render_template('delete_confirm.html', task=task)
 
 # Search tasks route
 @app.route('/search')
