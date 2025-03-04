@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Sign Up</title>
     <style>
         body {
             font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
@@ -16,7 +16,7 @@
             min-height: 100vh;
         }
 
-        .login-container {
+        .signup-container {
             background-color: #fff;
             padding: 25px;
             border-radius: 12px;
@@ -89,19 +89,19 @@
             background-color: #0056b3;
         }
 
-        .signup-link {
+        .login-link {
             text-align: center;
             margin-top: 15px;
             font-size: 14px;
         }
 
-        .signup-link a {
+        .login-link a {
             color: #007bff;
             text-decoration: none;
             font-weight: bold;
         }
 
-        .signup-link a:hover {
+        .login-link a:hover {
             text-decoration: underline;
         }
 
@@ -112,8 +112,8 @@
     </style>
 </head>
 <body>
-    <div class="login-container">
-        <h2>Login</h2>
+    <div class="signup-container">
+        <h2>Sign Up</h2>
 
         <!-- Display Flash Messages -->
         <div class="flash-messages">
@@ -126,17 +126,18 @@
             {% endwith %}
         </div>
 
-        <form method="POST" action="{{ url_for('login') }}">
+        <form method="POST" action="{{ url_for('signup') }}">
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" required>
 
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" required>
 
-            <button type="submit">Login</button>
+            <button type="submit">Sign Up</button>
         </form>
-        <div class="signup-link">
-            <p>Don't have an account? <a href="{{ url_for('signup') }}">Sign up</a></p>
+        
+        <div class="login-link">
+            <p>Already have an account? <a href="{{ url_for('login') }}">Log in</a></p>
         </div>
     </div>
 </body>

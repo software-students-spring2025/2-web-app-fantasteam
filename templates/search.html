@@ -2,45 +2,165 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Tasks</title>
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
+  <style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        margin: 0;
+        padding: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        text-align: center; 
+    }
+    
+    h1 {
+        color: #333;
+        margin-top: 20px;
+    }
+
+    form {
+        margin: 10px 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        width: 90%;
+        max-width: 400px; 
+    }
+
+    input[type="text"] {
+        padding: 10px;
+        width: 100%;
+        margin-bottom: 10px;
+        border-radius: 6px;
+        border: 1px solid #ccc;
+        text-align: center; 
+    }
+
+    button {
+        padding: 10px 16px;
+        cursor: pointer;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 6px;
+        margin-top: 5px;
+        width: 50%;
+        text-align: center;
+    }
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+    .task-list {
+        list-style: none;
+        padding: 0;
+        width: 90%;
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .task-container {
+        background: white;
+        margin: 10px;
+        padding: 15px;
+        border-left: 4px solid #007bff;
+        border-radius: 6px;
+        box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        width: 90%;
+        max-width: 300px;
+        overflow-wrap: break-word;
+    }
+
+    .task-container span {
+        display: block;
+        margin: 10px 0;
+        line-height: 1.6;
+    }
+
+    .task-container form {
+        width: 100%;
+    }
+
+    .task-container button {
+        width: 70%;
+        margin: 5px auto;
+    }
+
+    .no-tasks {
+      background-color: #ffdddd;  
+      color: #b30000;  
+      font-size: 20px;  
+      font-weight: bold;
+      text-align: center;
+      padding: 15px;
+      border: 2px solid #b30000;  
+      border-radius: 8px;
+      width: 80%;
+      max-width: 400px;
+      margin: 20px auto;
+    }
+    
+    /* Back button styling */
+    .back-btn {
+      display: block;
+      width: 200px;
+      text-align: center;
+      margin: 20px auto 0;
+      padding: 12px;
+      background: #28a745;
+      color: white;
+      font-size: 1rem;
+      text-decoration: none;
+      border-radius: 6px;
+      transition: background 0.3s ease;
+    }
+    .back-btn:hover {
+      background: #218838;
+    }
+  </style>
 </head>
 <body>
-  <div class="container my-5">
-    <h1 class="mb-4">Search Tasks</h1>
-    
-    <!-- Search Form -->
-    <form action="/search" method="GET" class="mb-4">
-      <div class="input-group">
-        <input 
-          type="text" 
-          class="form-control" 
-          name="query" 
-          placeholder="Enter keyword to search tasks..." 
-          value="{{ request.args.get('query', '') }}">
-        <div class="input-group-append">
-          <button type="submit">Search</button>
-        </div>
+  <h1>Search Tasks</h1>
+  
+  <!-- Search Form -->
+  <form action="{{ url_for('search') }}" method="GET">
+    <input type="text" id="search" name="query" placeholder="Search tasks..." value="{{ request.args.get('query', '') }}">
+    <button type="submit">Search</button>
+  </form>
+  
+  <!-- Search Results -->
+  <ul class="task-list">
+    {% if tasks %}
+      {% for task in tasks %}
+        <li class="task-container">
+          <span><strong>{{ task.title }}</strong><br>{{ task.description }}<br>{{ task.status }}</span>
+          <form action="{{ url_for('update', task_id=task['_id']) }}" method="GET">
+            <button type="submit" class="edit-btn">Edit</button>
+          </form>
+          <form action="{{ url_for('delete', task_id=task['_id']) }}" method="POST">
+            <button type="submit" class="delete-btn" onclick="return confirm('Are you sure you want to delete this task?');">
+              Delete
+            </button>
+          </form>
+        </li>
+      {% endfor %}
+    {% else %}
+      <div class="no-tasks">
+        No tasks found. Try searching again or add a new task!
       </div>
-    </form>
-    
-    <!-- Search Results -->
-    <div>
-      {% if tasks %}
-        <ul class="list-group">
-          {% for task in tasks %}
-            <li class="list-group-item">
-              <h5 class="mb-1">{{ task.title }}</h5>
-              <p class="mb-1">{{ task.description }}</p>
-              <small class="text-muted">Status: {{ task.status }}</small>
-            </li>
-          {% endfor %}
-        </ul>
-      {% else %}
-        <p>No tasks found.</p>
-      {% endif %}
-    </div>
-  </div>
+    {% endif %}
+  </ul>
+  
+  <!-- Back to Home Button -->
+  <a href="{{ url_for('home') }}" class="back-btn">Back to Home</a>
 </body>
 </html>
