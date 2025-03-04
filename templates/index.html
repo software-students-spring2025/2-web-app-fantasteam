@@ -87,19 +87,11 @@
         a:hover {
             background: #218838;
         }
-        b {
-            display: block;
-            margin: 5px auto;
-            padding: 8px 16px;
-            text-decoration: none;
-            background: #9c2783;
-            color: white;
-            border-radius: 4px;
-            width: 60%;
-            max-width: 200px;
-            text-align: center;
+        .add-task-btn {
+            background: #9c2783; /* Different color */
         }
-        b:hover {
+
+        .add-task-btn:hover {
             background: #73025b;
         }
         .task-container span {
@@ -154,6 +146,6 @@
     </ul>
 
     <a href="{{ url_for('completed') }}">View Completed Tasks</a>
-    <b href="{{ url_for('add') }}">Add New Task</b>
+    <a href="{{ url_for('add') }}" class="add-task-btn">Add New Task</a>
 </body>
 </html>
