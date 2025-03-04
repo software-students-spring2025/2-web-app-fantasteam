@@ -33,16 +33,13 @@ Our web-based task manager empowers users to seamlessly add, search, edit, and c
 
 ## Steps necessary to run the software
 
-
-# Task Manager - Setup and Run Guide
-
 This guide will help you **clone, set up, and run** the Task Manager Flask web application using **MongoDB Atlas** as the database.
 
 ---
 
-## **🔹 Step 1: Clone the Repository**
+### **🔹 Step 1: Clone the Repository**
 
-1. Open your terminal (Command Prompt, PowerShell, or Git Bash).
+1. Open your terminal.
 2. Navigate to the location where you want to store the project.
 3. Run the following command to **clone the repository** into a new folder named `TaskManager`:
 
@@ -57,7 +54,7 @@ This guide will help you **clone, set up, and run** the Task Manager Flask web a
 
 ---
 
-## **🔹 Step 2: Set Up MongoDB Atlas**  
+### **🔹 Step 2: Set Up MongoDB Atlas**  
 
 We will use **MongoDB Atlas** (Cloud Database) instead of a local MongoDB instance.
 
@@ -87,7 +84,7 @@ We will use **MongoDB Atlas** (Cloud Database) instead of a local MongoDB instan
 
 ---
 
-## **🔹 Step 3: Install Dependencies**
+### **🔹 Step 3: Install Dependencies**
 
 Make sure you have **Python installed**, then run the following command to install all required dependencies:
 
@@ -97,7 +94,7 @@ pip install -r requirements.txt
 
 ---
 
-## **🔹 Step 4: Run the Flask App**
+### **🔹 Step 4: Run the Flask App**
 
 Once everything is set up, start the Flask application by running:
 
@@ -113,7 +110,7 @@ If everything is configured correctly, you should see output like:
 
 ---
 
-## **🔹 Step 5: Open in Browser**
+### **🔹 Step 5: Open in Browser**
 
 Now, open your browser and go to:
 
@@ -123,7 +120,7 @@ http://127.0.0.1:5000/
 
 This will take you to the login page, where you can **sign up, log in, and start managing your tasks**.
 
-🎉 Your **Task Manager App** is now running successfully!
+Your **Task Manager App** is now running successfully!
 
 
 
