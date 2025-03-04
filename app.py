@@ -143,7 +143,8 @@ def delete(task_id):
         print(f"Failed to delete task {task_id}.")
         flash("Failed to delete task.", "error")
     # If the task was completed, stay on the completed page
-    if task_status == "completed":
+    previous_page = request.referrer
+    if previous_page and  "completed" in previous_page:
         return redirect(url_for('completed'))
     else:
         return redirect(url_for('home'))
