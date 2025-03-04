@@ -21,6 +21,12 @@
             margin-top: 20px;
             text-align: center;
         }
+        label {
+            font-size: 1rem;
+            font-weight: bold;
+            display: block;
+            margin-top: 5px;
+        }
         form {
             margin: 10px 0;
             display: flex;
@@ -35,13 +41,16 @@
             border: 1px solid #ccc;
         }
         button {
-            padding: 8px 16px;
+            padding: 8px 30px;
             cursor: pointer;
             background-color: #007bff;
             color: white;
             border: none;
             border-radius: 4px;
             margin-top: 5px;
+        }
+        button:hover {
+            background-color: #0552a4;
         }
         ul {
             list-style: none;
@@ -59,7 +68,7 @@
             border-radius: 6px;
             box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
             text-align: center;
-            width: 40%;
+            width: 70%;
             max-width: 300px;
             overflow-wrap: break-word;
         }
@@ -77,6 +86,21 @@
         }
         a:hover {
             background: #218838;
+        }
+        b {
+            display: block;
+            margin: 5px auto;
+            padding: 8px 16px;
+            text-decoration: none;
+            background: #9c2783;
+            color: white;
+            border-radius: 4px;
+            width: 60%;
+            max-width: 200px;
+            text-align: center;
+        }
+        b:hover {
+            background: #73025b;
         }
         .task-container span {
             display: block;
@@ -130,6 +154,6 @@
     </ul>
 
     <a href="{{ url_for('completed') }}">View Completed Tasks</a>
-    <a href="{{ url_for('add') }}" style="background: #ffc107;">Add New Task</a>
+    <b href="{{ url_for('add') }}">Add New Task</b>
 </body>
 </html>
