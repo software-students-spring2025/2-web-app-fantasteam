@@ -38,3 +38,124 @@ See instructions. Delete this line and place instructions to download, configure
 ## Task boards
 [Fantasteam - Sprint 1 Task Board](https://github.com/orgs/software-students-spring2025/projects/77)  
 [Fantasteam - Sprint 2 Task Board](https://github.com/orgs/software-students-spring2025/projects/104)
+
+# Flask-MongoDB Web App Example
+
+![Dockerize badge](https://github.com/nyu-software-engineering/flask-pymongo-web-app-example/actions/workflows/build.yaml/badge.svg)
+
+An example of a full-stack web application, built in Python with `Flask` and `PyMongo`.
+
+## Quick Test Drive
+
+The fastest way to see the example app in action on your own computer is to use [Docker](https://www.docker.com).
+
+First, you must:
+
+- Install and run [Docker Desktop](https://www.docker.com/get-started)
+- Create a [DockerHub](https://hub.docker.com/signup) account
+
+## Option 1: Using Docker Compose
+
+Use Docker Compose to boot up both the `MongoDB` database and the `Flask` web app with one command:
+
+```bash
+docker compose up --force-recreate --build
+To run in detached/background mode, add -d. To stop the containers when done, use:
+
+docker compose down
+If you see an error that a port is already in use, edit the first port number for the flask-app or mongodb service in the docker-compose.yml file and retry. For example, change:
+
+flask-app:
+  ports:
+    - "10000:5000"
+Then, update FLASK_PORT in docker-compose.yml accordingly.
+
+View the app in your browser:
+
+Open a web browser and go to http://localhost:5000 (or the custom port you assigned).
+Note: If you edit any project files, you must restart the containers.
+
+Option 2: Running Services Separately
+Start a MongoDB database first:
+
+docker run --name mongodb_dockerhub -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=secret -d mongo:latest
+Then start the flask-app:
+
+docker run -ti --rm -d -p 5000:5000 -e MONGO_DBNAME=flask-mongodb-web-app-example -e MONGO_URI="mongodb://admin:secret@host.docker.internal:27017" bloombar/flask-mongodb-web-app-example
+If you see a port conflict, change 5000 to another number, e.g., 10000:5000.
+
+Access the app:
+
+Open http://localhost:5000 (or the port you set).
+Setup for Editing
+1. Build and Launch MongoDB
+Start a MongoDB database:
+
+docker run --name mongodb_dockerhub -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=secret -d mongo:latest
+To interact with the database:
+
+docker exec -ti mongodb_dockerhub mongosh -u admin -p secret
+Show available databases:
+
+show dbs
+Use the database:
+
+use example
+List documents in the messages collection:
+
+db.messages.find()
+Exit:
+
+exit
+2. Create a .env File
+Create a .env file and add:
+
+MONGO_DBNAME=taskmanager
+MONGO_URI="mongodb://admin:secret@localhost:27017/taskmanager?authSource=admin&retryWrites=true&w=majority"
+SECRET_KEY="fantasteam2025"
+FLASK_ENV="development"
+FLASK_PORT="5000"
+3. Set Up a Python Virtual Environment
+Using pipenv
+Install pipenv:
+
+pip3 install pipenv
+Activate:
+
+pipenv shell
+Dependencies will be installed automatically.
+
+Using venv
+Create a virtual environment:
+
+python3 -m venv .venv
+Activate:
+
+# On Mac/Linux
+source .venv/bin/activate
+
+# On Windows
+.venv\Scripts\activate.bat
+Install dependencies:
+
+pip3 install -r requirements.txt
+4. Run the App
+Development Mode
+export FLASK_APP=app.py
+export FLASK_ENV=development
+flask run
+Or:
+
+python3 -m flask run --host=0.0.0.0 --port=5000
+Production Mode
+export FLASK_APP=app.py
+export FLASK_ENV=production
+gunicorn --config gunicorn_config.py wsgi:app
+Then visit http://0.0.0.0:8080 in your browser.
+
+Features
+User authentication (signup, login, logout)
+Task management (add, update, delete, mark as completed)
+Search tasks by title or description
+View completed tasks
+Secure with Flask-Login
