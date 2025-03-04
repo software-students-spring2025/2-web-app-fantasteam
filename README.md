@@ -33,7 +33,123 @@ Our web-based task manager empowers users to seamlessly add, search, edit, and c
 
 ## Steps necessary to run the software
 
-See instructions. Delete this line and place instructions to download, configure, and run the software here.
+This guide will help you **clone, set up, and run** the Task Manager Flask web application using **MongoDB Atlas** as the database.
+
+---
+
+### **🔹 Step 1: Clone the Repository**
+
+1. Open your terminal.
+2. Navigate to the location where you want to store the project.
+3. Run the following command to **clone the repository** into a new folder named `TaskManager`:
+
+   ```bash
+   git clone https://github.com/software-students-spring2025/2-web-app-fantasteam.git TaskManager
+   ```
+4. Navigate into the project folder:
+
+   ```bash
+   cd TaskManager
+   ```
+
+---
+
+### **🔹 Step 2: Set Up MongoDB Atlas**  
+
+We will use **MongoDB Atlas** (Cloud Database) instead of a local MongoDB instance.
+
+1. Sign up or log in to [MongoDB Atlas](https://www.mongodb.com/atlas).
+2. Create a new cluster:
+   - Click **"Create a new cluster"**.
+   - Select **"Shared Cluster"** (Free tier).
+   - Follow the instructions and wait for your cluster to be created.
+3. Go to **Database Deployment** → Click **"Connect"**.
+4. Choose **"Connect your application"**.
+5. Copy the connection string. It will look like this:
+   
+   ```
+   mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/task_manager?retryWrites=true&w=majority
+   ```
+
+6. Inside the `TaskManager` project folder, create a new file named **`.env`** and add the following:
+
+   ```env
+   MONGO_URI="mongodb+srv://<username>:<password>@<cluster-name>.mongodb.net/task_manager?retryWrites=true&w=majority"
+   MONGO_DBNAME="task_manager"
+   SECRET_KEY="your_secret_key"
+   FLASK_ENV="development"
+   ```
+
+   Replace `<username>`, `<password>`, and `<cluster-name>` with your actual MongoDB Atlas credentials.
+
+---
+
+### **🔹 Step 3: Install Dependencies**
+
+Make sure you have **Python installed**, then run the following command to install all required dependencies:
+
+```bash
+pip install -r requirements.txt
+```
+
+---
+
+### **🔹 Step 4: Run the Flask App**
+
+Once everything is set up, start the Flask application by running:
+
+```bash
+python app.py
+```
+
+If everything is configured correctly, you should see output like:
+
+```
+ * Running on http://127.0.0.1:5000/
+```
+
+---
+
+### **🔹 Step 5: Open in Browser**
+
+Now, open your browser and go to:
+
+```
+http://127.0.0.1:5000/
+```
+
+This will take you to the login page, where you can **sign up, log in, and start managing your tasks**.
+
+Your **Task Manager App** is now running successfully!
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 ## Task boards
 [Fantasteam - Sprint 1 Task Board](https://github.com/orgs/software-students-spring2025/projects/77)  
