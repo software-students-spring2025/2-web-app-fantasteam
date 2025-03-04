@@ -85,8 +85,12 @@ def logout():
     logout_user()
     return redirect(url_for('login'))
 
-# Home route - display all tasks
 @app.route('/')
+def default():
+    return redirect(url_for('login'))
+
+
+@app.route('/home')
 @login_required
 def home():
     tasks = get_tasks()  # Get all tasks from the database
